@@ -111,7 +111,7 @@ private:
 				cpy_i_post.column += one_column;
 			}
 		}
-		
+
 		return true;
 	}
 
@@ -152,7 +152,7 @@ public:
 
 		switch (chess_type[1]) {
 		case 'k':
-			if ((abs(diff_column) == 1 ||  diff_column == 0) && (abs(diff_row) == 1 || diff_row == 0)){ // check move
+			if ((abs(diff_column) == 1 || diff_column == 0) && (abs(diff_row) == 1 || diff_row == 0)) { // check move
 				string team = "" + chess_type[0];
 				if (IsCheckMate(team, chess_board, f_post.row, f_post.column)) {
 					return false;
@@ -260,7 +260,7 @@ public:
 
 		case 's':
 			//cout << "in s case";
-			if (chess_type[0] == 'w') 
+			if (chess_type[0] == 'w')
 			{
 				if (diff_row == 1 && diff_column == 0) // move one step ahead
 				{
@@ -298,7 +298,7 @@ public:
 				else
 					return false;
 			}
-			else if (chess_type[0] == 'b') 
+			else if (chess_type[0] == 'b')
 			{
 				if (diff_row == -1 && diff_column == 0) // move one step ahead
 				{
@@ -354,13 +354,13 @@ public:
 		chess_type = "";
 	}
 
-	
+
 };
 
 bool IsCheckMate(string team, string Chess_board[8][8], int row, int column) {
 	Move move;
 	string op_team = ("b" == team ? "w" : "b");
-	if(row == -1 || column == -1)
+	if (row == -1 || column == -1)
 		move.f_post = FindIndex(team + 'k');
 	else {
 		move.f_post.row = row;
@@ -385,7 +385,7 @@ bool IsCheckMate(string team, string Chess_board[8][8], int row, int column) {
 			break;
 		case 'e':
 			for (char num = '1'; num <= '2'; num++) {
-				move.chess_type = op_team + 'e'+num;
+				move.chess_type = op_team + 'e' + num;
 				move.i_post = FindIndex(move.chess_type);
 				if (move.IsMoveValid()) {
 					return true;
@@ -517,10 +517,10 @@ Move Input(char turn) {
 	move.f_post = init_post;
 	move.i_post = init_post;
 	bool IsMoveValid, IsInputValid;
-	if (turn == 'w') 
-	{	
+	if (turn == 'w')
+	{
 		IsMoveValid = true; IsInputValid = true;
-		CheckMateW:
+	CheckMateW:
 		do {
 			move.reset();
 			system("cls");
@@ -528,7 +528,7 @@ Move Input(char turn) {
 			if (IsCheckMate("w")) {
 				cout << endl << "  Checkmate.";
 			}
-			
+
 			if (!IsInputValid) {
 				cout << endl << "  Invalid Input.";
 			}
@@ -560,6 +560,8 @@ Move Input(char turn) {
 			IsInputValid = (CheckInput(move) ? true : false);
 		} while (!(move.IsMoveValid()) || !CheckInput(move));
 		string dead_chess = chess_board[move.f_post.row][move.f_post.column];
+		if (IsCheckMate("w"))
+			goto skip;
 		move.flip();
 		if (IsCheckMate("w")) {
 			IsMoveValid = false;
@@ -571,12 +573,13 @@ Move Input(char turn) {
 			chess_board[move.i_post.row][move.i_post.column] = move.chess_type;
 			chess_board[move.f_post.row][move.f_post.column] = dead_chess;
 		}
+	skip:;
 	}
 
 	else if (turn == 'b')
 	{
 		IsMoveValid = true; IsInputValid = true;
-		CheckMateB:
+	CheckMateB:
 		do {
 			move.reset();
 			system("cls");
@@ -614,6 +617,8 @@ Move Input(char turn) {
 			IsInputValid = (CheckInput(move) ? true : false);
 		} while (!(move.IsMoveValid()) || !CheckInput(move));
 		string dead_chess = chess_board[move.f_post.row][move.f_post.column];
+		if (IsCheckMate("b"))
+			goto skip1;
 		move.flip();
 		if (IsCheckMate("b")) {
 			IsMoveValid = false;
@@ -625,7 +630,7 @@ Move Input(char turn) {
 			chess_board[move.i_post.row][move.i_post.column] = move.chess_type;
 			chess_board[move.f_post.row][move.f_post.column] = dead_chess;
 		}
-
+	skip1:;
 	}
 
 	return move;
@@ -662,7 +667,7 @@ int main()
 		PrintBoard();
 		cout << endl << "  Black wins!";
 	}
-	
-	
+
+
 	return 0;
 }
