@@ -3,6 +3,8 @@
 #include <string>
 using namespace std;
 
+//modification
+
 string chess_board[8][8] =
 {
 	{"wc1", "wh1", "we1", "wk", "wq", "we2", "wh2", "wc2"},
